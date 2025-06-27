@@ -12,10 +12,17 @@ interface Movie {
 
 interface MovieCardProps {
   movie: Movie;
+  onPlay?: () => void;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, onPlay }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handlePlayClick = () => {
+    if (onPlay) {
+      onPlay();
+    }
+  };
 
   return (
     <div 
@@ -37,7 +44,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         {/* Play Button Overlay */}
         {isHovered && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-lg animate-fade-in">
-            <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all">
+            <button 
+              onClick={handlePlayClick}
+              className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition-all"
+            >
               <Play className="w-6 h-6 fill-current" />
             </button>
           </div>
@@ -60,7 +70,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           <div className="space-y-3">
             {/* Action Buttons */}
             <div className="flex items-center space-x-2">
-              <button className="bg-white text-black p-2 rounded-full hover:bg-gray-200 transition-colors">
+              <button 
+                onClick={handlePlayClick}
+                className="bg-white text-black p-2 rounded-full hover:bg-gray-200 transition-colors"
+              >
                 <Play className="w-4 h-4 fill-current" />
               </button>
               <button className="bg-gray-700 text-white p-2 rounded-full hover:bg-gray-600 transition-colors">

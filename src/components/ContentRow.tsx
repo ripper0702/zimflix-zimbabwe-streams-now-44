@@ -1,6 +1,6 @@
 
 import React, { useRef } from 'react';
-import { ChevronLeft, ChevronRight, Play, Plus, ThumbsUp } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import MovieCard from './MovieCard';
 
 interface Movie {
@@ -14,9 +14,10 @@ interface Movie {
 interface ContentRowProps {
   title: string;
   movies: Movie[];
+  onMovieClick?: (movieId: number) => void;
 }
 
-const ContentRow: React.FC<ContentRowProps> = ({ title, movies }) => {
+const ContentRow: React.FC<ContentRowProps> = ({ title, movies, onMovieClick }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -60,7 +61,11 @@ const ContentRow: React.FC<ContentRowProps> = ({ title, movies }) => {
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard 
+            key={movie.id} 
+            movie={movie} 
+            onPlay={onMovieClick ? () => onMovieClick(movie.id) : undefined}
+          />
         ))}
       </div>
     </div>

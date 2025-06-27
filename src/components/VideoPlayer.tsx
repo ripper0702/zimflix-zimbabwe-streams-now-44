@@ -91,6 +91,27 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose }) =
 
   return (
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+      <style>
+        {`
+          .video-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ef4444;
+            cursor: pointer;
+          }
+          
+          .video-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ef4444;
+            cursor: pointer;
+            border: none;
+          }
+        `}
+      </style>
       <div 
         className="relative w-full h-full flex items-center justify-center"
         onMouseMove={() => setShowControls(true)}
@@ -128,7 +149,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose }) =
                 max="100"
                 value={progressPercentage}
                 onChange={handleSeek}
-                className="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+                className="video-slider w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer"
               />
               <div className="flex justify-between text-xs text-gray-300 mt-1">
                 <span>{formatTime(currentTime)}</span>
@@ -185,26 +206,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose }) =
           </Button>
         )}
       </div>
-
-      <style jsx>{`
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background: #ef4444;
-          cursor: pointer;
-        }
-        
-        .slider::-moz-range-thumb {
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background: #ef4444;
-          cursor: pointer;
-          border: none;
-        }
-      `}</style>
     </div>
   );
 };

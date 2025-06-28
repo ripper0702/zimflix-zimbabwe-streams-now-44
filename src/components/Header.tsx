@@ -1,27 +1,76 @@
 
 import React, { useState } from 'react';
 import { Search, Bell, User, Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import SoundToggle from './SoundToggle';
+import { useSoundContext } from '../contexts/SoundContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const location = useLocation();
+  const { playHoverSound, playClickSound } = useSoundContext();
+
+  const isActive = (path: string) => location.pathname === path;
+
+  const handleLinkClick = () => {
+    playClickSound();
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center space-x-8">
-          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 bg-clip-text text-transparent">
-            ZimFlix
-          </h1>
+          <Link to="/" onClick={handleLinkClick}>
+            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 bg-clip-text text-transparent">
+              ZimFlix
+            </h1>
+          </Link>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
-            <a href="#" className="text-white hover:text-gray-300 transition-colors">Home</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Movies</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">TV Shows</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">Documentaries</a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">My List</a>
+            <Link 
+              to="/" 
+              className={`transition-colors ${isActive('/') ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+              onClick={handleLinkClick}
+              onMouseEnter={playHoverSound}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/movies" 
+              className={`transition-colors ${isActive('/movies') ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+              onClick={handleLinkClick}
+              onMouseEnter={playHoverSound}
+            >
+              Movies
+            </Link>
+            <Link 
+              to="/tv-shows" 
+              className={`transition-colors ${isActive('/tv-shows') ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+              onClick={handleLinkClick}
+              onMouseEnter={playHoverSound}
+            >
+              TV Shows
+            </Link>
+            <Link 
+              to="/documentaries" 
+              className={`transition-colors ${isActive('/documentaries') ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+              onClick={handleLinkClick}
+              onMouseEnter={playHoverSound}
+            >
+              Documentaries
+            </Link>
+            <Link 
+              to="/my-list" 
+              className={`transition-colors ${isActive('/my-list') ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+              onClick={handleLinkClick}
+              onMouseEnter={playHoverSound}
+            >
+              My List
+            </Link>
           </nav>
         </div>
 
@@ -53,6 +102,9 @@ const Header = () => {
             <Search className="w-6 h-6 text-white" />
           </button>
 
+          {/* Sound Toggle */}
+          <SoundToggle />
+
           {/* Notifications */}
           <button className="hidden md:block">
             <Bell className="w-6 h-6 text-white hover:text-gray-300 transition-colors" />
@@ -81,11 +133,41 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden mt-4 py-4 bg-black/90 rounded-lg animate-fade-in">
           <nav className="flex flex-col space-y-4 px-4">
-            <a href="#" className="text-white hover:text-green-400 transition-colors">Home</a>
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">Movies</a>
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">TV Shows</a>
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">Documentaries</a>
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">My List</a>
+            <Link 
+              to="/" 
+              className={`transition-colors ${isActive('/') ? 'text-white' : 'text-gray-400 hover:text-green-400'}`}
+              onClick={handleLinkClick}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/movies" 
+              className={`transition-colors ${isActive('/movies') ? 'text-white' : 'text-gray-400 hover:text-green-400'}`}
+              onClick={handleLinkClick}
+            >
+              Movies
+            </Link>
+            <Link 
+              to="/tv-shows" 
+              className={`transition-colors ${isActive('/tv-shows') ? 'text-white' : 'text-gray-400 hover:text-green-400'}`}
+              onClick={handleLinkClick}
+            >
+              TV Shows
+            </Link>
+            <Link 
+              to="/documentaries" 
+              className={`transition-colors ${isActive('/documentaries') ? 'text-white' : 'text-gray-400 hover:text-green-400'}`}
+              onClick={handleLinkClick}
+            >
+              Documentaries
+            </Link>
+            <Link 
+              to="/my-list" 
+              className={`transition-colors ${isActive('/my-list') ? 'text-white' : 'text-gray-400 hover:text-green-400'}`}
+              onClick={handleLinkClick}
+            >
+              My List
+            </Link>
             <hr className="border-gray-700" />
             <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">Account</a>
             <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">Help Centre</a>

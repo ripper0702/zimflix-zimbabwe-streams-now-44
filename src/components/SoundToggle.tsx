@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { SpeakerHigh, SpeakerX } from 'phosphor-react';
 import { useSoundContext } from '../contexts/SoundContext';
 import { Button } from './ui/button';
 
@@ -17,12 +17,12 @@ const SoundToggle = () => {
       onClick={handleToggle}
       variant="ghost"
       size="sm"
-      className="text-white hover:text-gray-300 hover:bg-white/10"
+      className="text-white hover:text-gray-300 hover:bg-white/10 p-2"
     >
       {isSoundEnabled ? (
-        <Volume2 className="w-6 h-6" />
+        <SpeakerHigh size={20} />
       ) : (
-        <VolumeX className="w-6 h-6" />
+        <SpeakerX size={20} />
       )}
     </Button>
   );

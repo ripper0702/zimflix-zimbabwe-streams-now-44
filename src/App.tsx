@@ -5,12 +5,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SoundProvider } from "./contexts/SoundContext";
-import Index from "./pages/Index";
-import Movies from "./pages/Movies";
-import TVShows from "./pages/TVShows";
-import Documentaries from "./pages/Documentaries";
-import MyList from "./pages/MyList";
-import NotFound from "./pages/NotFound";
+import Home from "./pages/Home";
+import Upload from "./pages/Upload";
+import Profile from "./pages/Profile";
+import MobileNav from "./components/MobileNav";
 
 const queryClient = new QueryClient();
 
@@ -21,15 +19,14 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/tv-shows" element={<TVShows />} />
-            <Route path="/documentaries" element={<Documentaries />} />
-            <Route path="/my-list" element={<MyList />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div className="h-screen bg-black text-white overflow-hidden">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+            <MobileNav />
+          </div>
         </BrowserRouter>
       </SoundProvider>
     </TooltipProvider>

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Heart, MessageCircle, UserPlus, Play } from 'phosphor-react';
+import { Heart, ChatCircle, UserPlus, Play } from 'phosphor-react';
 
 interface NotificationDropdownProps {
   onClose: () => void;
@@ -20,7 +20,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ onClose }) 
     {
       id: 2,
       type: 'comment',
-      icon: MessageCircle,
+      icon: ChatCircle,
       user: 'sarah_tech',
       action: 'commented on your video',
       time: '5m ago',

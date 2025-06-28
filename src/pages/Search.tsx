@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { MagnifyingGlass, TrendingUp, Clock } from 'phosphor-react';
+import { MagnifyingGlass, TrendUp, Clock } from 'phosphor-react';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -89,7 +89,7 @@ const Search = () => {
                     : 'bg-black/20 backdrop-blur-xl border border-white/10 text-gray-400'
                 }`}
               >
-                <TrendingUp size={16} />
+                <TrendUp size={16} />
                 <span className="text-sm font-medium">Trending</span>
               </button>
               <button
@@ -118,7 +118,7 @@ const Search = () => {
                     className="flex items-center space-x-3 w-full p-4 bg-black/20 backdrop-blur-xl border border-white/10 rounded-2xl hover:bg-black/30 hover:border-white/20 transition-all duration-300"
                   >
                     {activeTab === 'trending' ? (
-                      <TrendingUp size={20} className="text-gray-400" />
+                      <TrendUp size={20} className="text-gray-400" />
                     ) : (
                       <Clock size={20} className="text-gray-400" />
                     )}

@@ -21,7 +21,7 @@ const MobileNav = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 px-4 py-2 z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-black/20 backdrop-blur-2xl border-t border-white/10 px-4 py-2 z-50">
       <div className="flex justify-around items-center">
         {navItems.map(({ icon: Icon, label, path }) => {
           const isActive = location.pathname === path;
@@ -30,14 +30,24 @@ const MobileNav = () => {
               key={path}
               to={path}
               onClick={handleNavClick}
-              className="flex flex-col items-center py-2 px-3"
+              className="flex flex-col items-center py-2 px-3 transition-all duration-300"
             >
-              <Icon 
-                size={24} 
-                weight={isActive ? "fill" : "regular"}
-                className={isActive ? "text-white" : "text-gray-400"}
-              />
-              <span className={`text-xs mt-1 ${isActive ? "text-white" : "text-gray-400"}`}>
+              <div className={`p-2 rounded-2xl transition-all duration-300 ${
+                isActive 
+                  ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-xl border border-white/20' 
+                  : 'hover:bg-white/5'
+              }`}>
+                <Icon 
+                  size={24} 
+                  weight={isActive ? "fill" : "regular"}
+                  className={`transition-colors duration-300 ${
+                    isActive ? "text-white" : "text-gray-400"
+                  }`}
+                />
+              </div>
+              <span className={`text-xs mt-1 transition-colors duration-300 ${
+                isActive ? "text-white font-medium" : "text-gray-400"
+              }`}>
                 {label}
               </span>
             </Link>

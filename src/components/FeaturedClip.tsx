@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Play, Heart, ChatCircle, Share, Info } from 'phosphor-react';
+import { Play, Heart, Share, Info, Plus, ChatCircle } from '@phosphor-icons/react';
 
 interface FeaturedClipProps {
   clip: {

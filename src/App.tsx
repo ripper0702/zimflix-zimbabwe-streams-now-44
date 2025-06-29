@@ -12,6 +12,8 @@ import Search from "./pages/Search";
 import Upload from "./pages/Upload";
 import Likes from "./pages/Likes";
 import Profile from "./pages/Profile";
+import VideoDetail from "./pages/VideoDetail";
+import MyList from "./pages/MyList";
 import MobileNav from "./components/MobileNav";
 
 const queryClient = new QueryClient();
@@ -40,6 +42,9 @@ const App = () => {
                   <Route path="/upload" element={<Upload />} />
                   <Route path="/likes" element={<Likes />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/my-list" element={<MyList />} />
+                  <Route path="/video/:id" element={<VideoDetail />} />
+                  <Route path="/clip/:id" element={<VideoDetail />} />
                 </Routes>
                 <MobileNav />
               </div>

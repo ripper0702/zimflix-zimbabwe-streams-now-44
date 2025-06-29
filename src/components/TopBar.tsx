@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Bell } from 'phosphor-react';
+import { Bell } from '@phosphor-icons/react';
 import SoundToggle from './SoundToggle';
 import NotificationDropdown from './NotificationDropdown';
 

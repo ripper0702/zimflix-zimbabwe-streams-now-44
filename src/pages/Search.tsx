@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { MagnifyingGlass, TrendUp, Clock } from 'phosphor-react';
+import { MagnifyingGlass, Sparkle, TrendUp, Hash, Clock } from '@phosphor-icons/react';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');

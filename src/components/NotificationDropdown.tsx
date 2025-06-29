@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Heart, ChatCircle, UserPlus, Play } from 'phosphor-react';
+import { Heart, ChatCircle, UserPlus, Play } from '@phosphor-icons/react';
 
 interface NotificationDropdownProps {
   onClose: () => void;

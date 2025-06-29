@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Gear, Heart, Share } from 'phosphor-react';
+import { Gear, Heart, Share } from '@phosphor-icons/react';
 
 const Profile = () => {
   const userStats = {

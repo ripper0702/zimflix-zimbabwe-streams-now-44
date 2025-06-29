@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { House, MagnifyingGlass, Plus, Heart, User } from 'phosphor-react';
+import { House, MagnifyingGlass, Plus, Heart, User } from '@phosphor-icons/react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSoundContext } from '../contexts/SoundContext';
 

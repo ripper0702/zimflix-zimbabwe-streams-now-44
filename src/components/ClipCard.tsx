@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { Heart, ChatCircle, Play, Eye } from 'phosphor-react';
+import { Heart, Share, Play, Eye, ChatCircle } from '@phosphor-icons/react';
+import { Link } from 'react-router-dom';
 
 interface Clip {
   id: string;
@@ -31,8 +32,9 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
   };
 
   return (
-    <div 
-      className="relative flex-shrink-0 w-64 sm:w-72 md:w-80 cursor-pointer group"
+    <Link 
+      to={`/clip/${clip.id}`}
+      className="relative flex-shrink-0 w-64 sm:w-72 md:w-80 cursor-pointer group block transition-transform duration-300 hover:scale-105 hover:z-10"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false)
@@ -59,12 +61,9 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
 
           {/* Play Button Overlay */}
           <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-            <button 
-              onClick={onPlay}
-              className="bg-white/20 hover:bg-white/30 backdrop-blur-xl border border-white/30 text-white p-4 rounded-full transition-all duration-300 hover:scale-110"
-            >
+            <div className="bg-white/20 hover:bg-white/30 backdrop-blur-xl border border-white/30 text-white p-4 rounded-full transition-all duration-300 hover:scale-110">
               <Play size={32} weight="fill" />
-            </button>
+            </div>
           </div>
 
           {/* Bottom Info Overlay */}
@@ -98,16 +97,17 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-2">
-            <button 
-              onClick={onPlay}
-              className="flex-1 bg-white text-black py-2 px-3 rounded-md font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2 text-sm"
-            >
+            <div className="flex-1 bg-white text-black py-2 px-3 rounded-md font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2 text-sm pointer-events-none">
               <Play size={16} weight="fill" />
               <span>Watch</span>
-            </button>
+            </div>
             
             <button 
-              onClick={() => setIsLiked(!isLiked)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsLiked(!isLiked);
+              }}
               className={`p-2 rounded-md transition-all duration-300 ${
                 isLiked 
                   ? 'bg-red-500/20 border border-red-500/30 text-red-500' 
@@ -117,13 +117,19 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
               <Heart size={16} weight={isLiked ? "fill" : "regular"} />
             </button>
             
-            <button className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition-colors">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition-colors"
+            >
               <ChatCircle size={16} />
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

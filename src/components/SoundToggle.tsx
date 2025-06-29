@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { SpeakerHigh, SpeakerX } from 'phosphor-react';
+import { SpeakerHigh, SpeakerX } from '@phosphor-icons/react';
 import { useSoundContext } from '../contexts/SoundContext';
 import { Button } from './ui/button';
 

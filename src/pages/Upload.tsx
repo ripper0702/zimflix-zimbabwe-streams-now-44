@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Camera, X } from 'phosphor-react';
+import { Camera, X } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 
 const Upload = () => {

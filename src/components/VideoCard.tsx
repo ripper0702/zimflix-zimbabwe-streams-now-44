@@ -1,6 +1,6 @@
 
 import React, { useRef, useState, useEffect } from 'react';
-import { Heart, ChatCircle, Share, Play, Pause, SpeakerHigh, SpeakerX } from 'phosphor-react';
+import { Heart, ChatCircle, Share, Play, Pause, SpeakerHigh, SpeakerX } from '@phosphor-icons/react';
 import { useSoundContext } from '../contexts/SoundContext';
 
 interface Video {

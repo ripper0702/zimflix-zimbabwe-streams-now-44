@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Heart, Play, Share, Bookmark } from 'phosphor-react';
+import { Heart, Play, Share, Bookmark } from '@phosphor-icons/react';
 
 const Likes = () => {
   const [activeTab, setActiveTab] = useState('liked');

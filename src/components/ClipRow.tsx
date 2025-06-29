@@ -1,6 +1,6 @@
 
 import React, { useRef } from 'react';
-import { CaretLeft, CaretRight } from 'phosphor-react';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import ClipCard from './ClipCard';
 
 interface Clip {

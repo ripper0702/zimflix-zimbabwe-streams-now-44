@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import FeaturedClip from '../components/FeaturedClip';
 import ClipRow from '../components/ClipRow';
@@ -158,9 +159,11 @@ const Home = () => {
     }
   ]);
 
+  const navigate = useNavigate();
+
   const handlePlayClip = (clip: Clip) => {
     console.log('Playing clip:', clip.title);
-    // TODO: Navigate to clip player or open modal
+    navigate(`/video/${clip.id}`);
   };
 
   return (

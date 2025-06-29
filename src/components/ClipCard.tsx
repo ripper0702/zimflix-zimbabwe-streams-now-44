@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Heart, Share, Play, Eye, ChatCircle } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
 import CommentsView from './CommentsView';
-import mockComments from '../data/mockComments';
 
 interface Clip {
   id: string;
@@ -19,10 +18,11 @@ interface Clip {
 
 interface ClipCardProps {
   clip: Clip;
+  comments: Comment[];
   onPlay: () => void;
 }
 
-const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
+const ClipCard: React.FC<ClipCardProps> = ({ clip, comments, onPlay }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -138,7 +138,7 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
       {showComments && (
         <CommentsView 
           clip={clip} 
-          comments={mockComments[clip.id] ?? []} 
+          comments={comments} 
           onClose={() => setShowComments(false)} 
         />
       )}

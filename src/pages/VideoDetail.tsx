@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Play, Plus, ThumbsUp, ThumbsDown, Share, Download, ArrowLeft } from 'lucide-react';
+import { Play, Plus, ThumbsUp, ThumbsDown, Share, Download, ArrowLeft, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import NetflixVideoPlayer from '@/components/NetflixVideoPlayer';
 import ClipRow from '@/components/ClipRow';
 import TopBar from '@/components/TopBar';
+import CommentsView from '@/components/CommentsView';
 
 interface VideoData {
   id: string;
@@ -26,6 +27,15 @@ interface VideoData {
   episodes?: VideoData[];
 }
 
+interface Comment {
+  id: string;
+  user: string;
+  avatar: string;
+  text: string;
+  timestamp: Date;
+  likes: number;
+}
+
 const VideoDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -35,6 +45,8 @@ const VideoDetail = () => {
   const [isInList, setIsInList] = useState(false);
   const [currentEpisode, setCurrentEpisode] = useState(0);
   const [relatedVideos, setRelatedVideos] = useState<VideoData[]>([]);
+  const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+  const [mockComments, setMockComments] = useState<Comment[]>([]);
 
   useEffect(() => {
     // Simulate fetching video data - in real app, this would be an API call
@@ -150,6 +162,14 @@ const VideoDetail = () => {
     };
 
     fetchVideoData();
+
+    // Simulate fetching comments
+    const fetchComments = async () => {
+      const { mockComments } = await import('@/data/mockComments');
+      setMockComments(mockComments);
+    };
+
+    fetchComments();
   }, [id]);
 
   const handlePlayVideo = (episodeIndex: number = -1) => {
@@ -182,6 +202,10 @@ const VideoDetail = () => {
 
   const toggleList = () => {
     setIsInList(!isInList);
+  };
+
+  const openComments = () => {
+    setIsCommentsOpen(true);
   };
 
   if (!video) {
@@ -317,6 +341,15 @@ const VideoDetail = () => {
                 >
                   <Download className="w-5 h-5" />
                 </Button>
+
+                <Button
+                  onClick={openComments}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:bg-white/20 p-3 rounded-full"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                </Button>
               </div>
             </div>
 
@@ -417,6 +450,25 @@ const VideoDetail = () => {
             onPlayClip={(clip) => navigate(`/video/${clip.id}`)}
           />
         </div>
+      )}
+
+      {video && (
+        <CommentsView
+          clip={{
+            id: video.id,
+            title: video.title,
+            thumbnail: video.thumbnail,
+            author: video.author,
+            likes: video.likes,
+            comments: video.comments,
+            views: video.views,
+            duration: video.duration,
+            category: video.category,
+          }}
+          comments={mockComments}
+          onClose={() => setIsCommentsOpen(false)}
+          isVisible={isCommentsOpen}
+        />
       )}
     </div>
   );

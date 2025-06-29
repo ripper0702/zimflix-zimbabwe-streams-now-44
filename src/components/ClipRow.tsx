@@ -35,9 +35,9 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
   };
 
   return (
-    <div className="group relative mb-8 md:mb-12">
+    <div className="group relative mb-12 md:mb-16">
       {/* Section Title */}
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6 px-4 sm:px-6">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 sm:mb-8 px-4 sm:px-6">
         {title}
       </h2>
 
@@ -45,7 +45,7 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
       <div className="relative">
         <div 
           ref={scrollRef}
-          className="flex space-x-4 overflow-x-auto scrollbar-hide px-4 sm:px-6 pb-4 -mb-4"
+          className="flex space-x-6 overflow-x-auto scrollbar-hide px-4 sm:px-6 pb-6 -mb-6"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',

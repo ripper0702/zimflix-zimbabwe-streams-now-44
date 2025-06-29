@@ -33,8 +33,8 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
       {/* Content */}
-      <div className="relative h-full flex flex-col justify-end p-4 sm:p-8 md:p-12">
-        <div className="max-w-2xl">
+      <div className="relative h-full flex flex-col justify-end p-6 sm:p-10 md:p-16">
+        <div className="max-w-3xl">
           {/* Category Badge */}
           <div className="inline-block bg-gradient-to-r from-green-400/20 to-yellow-400/20 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm px-3 py-1 rounded-full mb-4">
             {clip.category}
@@ -46,7 +46,7 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
           </h1>
 
           {/* Author and Stats */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 text-white/80 mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 text-white/80 mb-6">
             <span className="text-md sm:text-lg font-semibold">@{clip.author}</span>
             <div className="flex items-center space-x-4 text-xs sm:text-sm mt-2 sm:mt-0">
               <span>{clip.views} views</span>
@@ -58,7 +58,7 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
           </div>
 
           {/* Description */}
-          <p className="text-white/90 text-sm sm:text-lg mb-8 line-clamp-2 sm:line-clamp-3 max-w-xl">
+          <p className="text-white/90 text-sm sm:text-lg mb-10 line-clamp-3 sm:line-clamp-4 max-w-2xl leading-relaxed">
             {clip.description}
           </p>
 

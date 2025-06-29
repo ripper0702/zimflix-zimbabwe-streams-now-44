@@ -68,16 +68,16 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
           </div>
 
           {/* Bottom Info Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-3">
-            <h3 className="text-white font-bold text-md sm:text-lg mb-1 line-clamp-1">{clip.title}</h3>
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <h3 className="text-white font-bold text-md sm:text-lg mb-2 line-clamp-2">{clip.title}</h3>
             <p className="text-white/80 text-xs sm:text-sm">@{clip.author}</p>
           </div>
         </div>
       </div>
 
       {/* Expanded Info on Hover/Touch */}
-      <div className={`absolute top-full left-0 right-0 bg-gray-900/95 backdrop-blur-xl rounded-b-lg p-3 shadow-2xl z-20 border border-gray-700/50 transition-all duration-300 ease-in-out ${isHovered || isExpanded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}>
-        <div className="space-y-3">
+      <div className={`absolute top-full left-0 right-0 bg-gray-900/95 backdrop-blur-xl rounded-b-lg p-5 shadow-2xl z-20 border border-gray-700/50 transition-all duration-300 ease-in-out ${isHovered || isExpanded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}>
+        <div className="space-y-4">
           {/* Stats Row */}
           <div className="flex items-center justify-between text-xs sm:text-sm text-gray-300">
             <div className="flex items-center space-x-3">

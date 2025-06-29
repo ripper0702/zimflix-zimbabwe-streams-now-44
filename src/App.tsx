@@ -33,7 +33,7 @@ const App = () => {
             <SplashScreen onComplete={handleSplashComplete} />
           ) : (
             <BrowserRouter>
-              <div className="h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white overflow-hidden">
+              <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/search" element={<Search />} />

@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Heart, Share, Play, Eye, ChatCircle } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
+import CommentsView from './CommentsView';
+import mockComments from '../data/mockComments';
 
 interface Clip {
   id: string;
@@ -24,6 +26,7 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
   const handleInteraction = () => {
     if ('ontouchstart' in window) {
@@ -121,6 +124,7 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                setShowComments(true);
               }}
               className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition-colors"
             >
@@ -129,6 +133,15 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
           </div>
         </div>
       </div>
+      
+      {/* Comments View */}
+      {showComments && (
+        <CommentsView 
+          clip={clip} 
+          comments={mockComments[clip.id] ?? []} 
+          onClose={() => setShowComments(false)} 
+        />
+      )}
     </Link>
   );
 };

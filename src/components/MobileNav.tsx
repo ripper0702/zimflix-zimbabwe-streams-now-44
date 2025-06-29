@@ -21,8 +21,8 @@ const MobileNav = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-black/20 backdrop-blur-2xl border-t border-white/10 px-4 py-2 z-50">
-      <div className="flex justify-around items-center">
+    <div className="fixed bottom-0 left-0 right-0 bg-black/30 backdrop-blur-2xl border-t border-white/10 z-50 safe-area-inset-bottom">
+      <div className="flex justify-around items-center px-2 py-3">
         {navItems.map(({ icon: Icon, label, path }) => {
           const isActive = location.pathname === path;
           return (
@@ -30,23 +30,23 @@ const MobileNav = () => {
               key={path}
               to={path}
               onClick={handleNavClick}
-              className="flex flex-col items-center py-2 px-3 transition-all duration-300"
+              className="flex flex-col items-center py-2 px-3 transition-all duration-300 min-w-[60px]"
             >
-              <div className={`p-2 rounded-2xl transition-all duration-300 ${
+              <div className={`p-3 rounded-2xl transition-all duration-300 ${
                 isActive 
-                  ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-xl border border-white/20' 
-                  : 'hover:bg-white/5'
+                  ? 'bg-gradient-to-r from-purple-500/30 to-pink-500/30 backdrop-blur-xl border border-white/30 shadow-lg' 
+                  : 'hover:bg-white/10'
               }`}>
                 <Icon 
                   size={24} 
                   weight={isActive ? "fill" : "regular"}
-                  className={`transition-colors duration-300 ${
-                    isActive ? "text-white" : "text-gray-400"
+                  className={`transition-all duration-300 ${
+                    isActive ? "text-white scale-110" : "text-gray-300"
                   }`}
                 />
               </div>
-              <span className={`text-xs mt-1 transition-colors duration-300 ${
-                isActive ? "text-white font-medium" : "text-gray-400"
+              <span className={`text-xs mt-1 transition-all duration-300 font-medium ${
+                isActive ? "text-white scale-105" : "text-gray-400"
               }`}>
                 {label}
               </span>

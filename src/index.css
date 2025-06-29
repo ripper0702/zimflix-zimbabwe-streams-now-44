@@ -69,28 +69,52 @@
   }
 }
 
-/* iOS-style liquid glass effects */
+/* Premium iOS-style liquid glass effects */
 .glass-effect {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .glass-effect-strong {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(60px);
+  -webkit-backdrop-filter: blur(60px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 16px 64px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
-/* Enhanced animations */
+/* Premium gradient effects */
+.gradient-border {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  border: 1px solid transparent;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask-composite: xor;
+}
+
+/* Enhanced animations with premium feel */
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(30px) scale(0.95);
   }
   to {
     opacity: 1;
@@ -107,14 +131,27 @@
   }
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(147, 51, 234, 0.6);
+  }
+}
+
 .animate-fade-in {
-  animation: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
 }
 
 /* Line clamp utilities */
@@ -125,30 +162,54 @@
   overflow: hidden;
 }
 
-/* Mobile-first responsive design */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Premium mobile-first responsive design */
 @media (max-width: 768px) {
   body {
-    font-size: 14px;
+    font-size: 16px; /* Increased for better mobile readability */
   }
+}
+
+/* Safe area handling for modern mobile devices */
+.safe-area-inset-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Prevent zoom on input focus on iOS */
 input, textarea, select {
   font-size: 16px;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
-/* Custom scrollbar for mobile */
+/* Premium custom scrollbar */
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 3px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 1px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Hide scrollbars but keep functionality */
@@ -163,28 +224,74 @@ input, textarea, select {
 
 /* Zimbabwe flag colors gradient */
 .zim-gradient {
-  background: linear-gradient(45deg, #00A651, #FFD320, #DE2910);
+  background: linear-gradient(45deg, #00A651 0%, #FFD320 50%, #DE2910 100%);
 }
 
-/* Enhanced touch interactions */
+/* Enhanced touch interactions with haptic feedback feel */
 .touch-highlight {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+  transition: all 0.15s ease;
 }
 
-/* Improved glass morphism for mobile */
-@supports (backdrop-filter: blur(20px)) {
+.touch-highlight:active {
+  transform: scale(0.98);
+  opacity: 0.8;
+}
+
+/* Premium glass morphism for mobile with better performance */
+@supports (backdrop-filter: blur(40px)) {
   .mobile-glass {
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 
-@supports not (backdrop-filter: blur(20px)) {
+@supports not (backdrop-filter: blur(40px)) {
   .mobile-glass {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
   }
+}
+
+/* Premium button states */
+.btn-premium {
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-premium:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.btn-premium:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* Premium card hover effects */
+.card-premium {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-premium:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(255,255,255,0.1);
+}
+
+/* Loading states with premium feel */
+.loading-skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
 }

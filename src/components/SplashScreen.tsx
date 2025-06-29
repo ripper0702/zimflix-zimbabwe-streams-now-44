@@ -22,11 +22,11 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
     ];
 
     const timeouts = [
-      setTimeout(phases[0], 300),
-      setTimeout(phases[1], 1200),
-      setTimeout(phases[2], 2000),
-      setTimeout(phases[3], 2800),
-      setTimeout(phases[4], 3800)
+      setTimeout(phases[0], 500),
+      setTimeout(phases[1], 1500),
+      setTimeout(phases[2], 2500),
+      setTimeout(phases[3], 3500),
+      setTimeout(phases[4], 4800)
     ];
 
     return () => timeouts.forEach(clearTimeout);
@@ -71,16 +71,17 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
       {/* Main Logo Container */}
       <div className="relative z-10 text-center">
         {/* Logo Text */}
-        <div className={`transform transition-all duration-1000 ${animationPhase >= 1 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-75 translate-y-8'}`}>
-          <h1 className="text-8xl md:text-9xl font-black bg-gradient-to-r from-green-400 via-yellow-400 to-red-400 bg-clip-text text-transparent relative">
+        <div className={`transform transition-all duration-1500 ${animationPhase >= 1 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-75 translate-y-8'}`}>
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-black bg-gradient-to-r from-green-400 via-yellow-400 to-red-400 bg-clip-text text-transparent relative">
             <span className="relative inline-block">
               {'ZimFlix'.split('').map((letter, index) => (
                 <span
                   key={index}
                   className="inline-block animate-bounce opacity-0"
                   style={{
-                    animationDelay: `${0.1 * index + 1.2}s`,
-                    animationFillMode: 'forwards'
+                    animationDelay: `${0.15 * index + 1.5}s`,
+                    animationFillMode: 'forwards',
+                    animationDuration: '1s'
                   }}
                 >
                   {letter}
@@ -96,15 +97,15 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         </div>
 
         {/* Tagline */}
-        <div className={`mt-8 transform transition-all duration-1000 delay-500 ${animationPhase >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <p className="text-xl md:text-2xl text-white/80 font-light tracking-wide">
-            Zimbabwe's Premier Streaming Experience
+        <div className={`mt-8 transform transition-all duration-1000 delay-700 ${animationPhase >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <p className="text-lg md:text-xl text-white/80 font-light tracking-wide max-w-xs mx-auto">
+            Zimbabwe's Premier Experience
           </p>
-          <div className="mt-4 w-32 h-0.5 bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto animate-shimmer"></div>
+          <div className="mt-4 w-24 h-0.5 bg-gradient-to-r from-transparent via-white/60 to-transparent mx-auto animate-shimmer"></div>
         </div>
 
         {/* Loading Animation */}
-        <div className={`mt-12 transform transition-all duration-1000 delay-1000 ${animationPhase >= 3 ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`mt-12 transform transition-all duration-1000 delay-1500 ${animationPhase >= 3 ? 'opacity-100' : 'opacity-0'}`}>
           <div className="flex justify-center space-x-2">
             {[...Array(3)].map((_, i) => (
               <div

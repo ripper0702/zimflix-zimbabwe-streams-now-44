@@ -46,17 +46,6 @@ const Home = () => {
           category: 'Comedy'
         },
         {
-          id: '2',
-          title: 'Dance Challenge Zim',
-          thumbnail: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400&h=300&fit=crop',
-          author: 'zimdancer',
-          likes: 5670,
-          comments: 234,
-          views: '78K',
-          duration: '1:30',
-          category: 'Dance'
-        },
-        {
           id: '3',
           title: 'Cooking With Gogo',
           thumbnail: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop',
@@ -78,17 +67,6 @@ const Home = () => {
           duration: '3:20',
           category: 'Fashion'
         },
-        {
-          id: '5',
-          title: 'Local Music Vibes',
-          thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop',
-          author: 'zimmusic',
-          likes: 7890,
-          comments: 456,
-          views: '92K',
-          duration: '2:55',
-          category: 'Music'
-        }
       ]
     },
     {
@@ -137,44 +115,6 @@ const Home = () => {
           views: '73K',
           duration: '3:15',
           category: 'Comedy'
-        }
-      ]
-    },
-    {
-      title: 'Music & Dance',
-      clips: [
-        {
-          id: '10',
-          title: 'Afrobeat Sessions',
-          thumbnail: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop',
-          author: 'afrobeats',
-          likes: 9876,
-          comments: 654,
-          views: '145K',
-          duration: '3:30',
-          category: 'Music'
-        },
-        {
-          id: '11',
-          title: 'Traditional Dance',
-          thumbnail: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400&h=300&fit=crop',
-          author: 'traditionaldance',
-          likes: 6789,
-          comments: 432,
-          views: '89K',
-          duration: '4:45',
-          category: 'Dance'
-        },
-        {
-          id: '12',
-          title: 'Urban Beats',
-          thumbnail: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
-          author: 'urbanbeats',
-          likes: 7654,
-          comments: 389,
-          views: '98K',
-          duration: '2:20',
-          category: 'Music'
         }
       ]
     },

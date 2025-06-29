@@ -35,36 +35,17 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
   };
 
   return (
-    <div className="relative mb-12">
+    <div className="group relative mb-8 md:mb-12">
       {/* Section Title */}
-      <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 px-6">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6 px-4 sm:px-6">
         {title}
       </h2>
 
-      {/* Navigation Buttons */}
-      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10">
-        <button
-          onClick={() => scroll('left')}
-          className="ml-2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-xl border border-white/20 text-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-        >
-          <CaretLeft size={24} />
-        </button>
-      </div>
-
-      <div className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10">
-        <button
-          onClick={() => scroll('right')}
-          className="mr-2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-xl border border-white/20 text-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-        >
-          <CaretRight size={24} />
-        </button>
-      </div>
-
       {/* Clips Scroll Container */}
-      <div className="group relative">
+      <div className="relative">
         <div 
           ref={scrollRef}
-          className="flex space-x-4 overflow-x-auto scrollbar-hide px-6 pb-4"
+          className="flex space-x-4 overflow-x-auto scrollbar-hide px-4 sm:px-6 pb-4 -mb-4"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -78,6 +59,22 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
             />
           ))}
         </div>
+
+        {/* Navigation Buttons */}
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-20 ml-2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-xl border border-white/20 text-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
+          // disabled={!canScrollLeft}
+        >
+          <CaretLeft size={24} />
+        </button>
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-20 mr-2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-xl border border-white/20 text-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
+          // disabled={!canScrollRight}
+        >
+          <CaretRight size={24} />
+        </button>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { X } from 'lucide-react';
+import CommentItem from './CommentItem';
 
 interface Clip {
   id: string;
@@ -67,18 +68,20 @@ const [isOpen, setIsOpen] = useState(isVisible);
             </button>
           </div>
         </div>
-        <ul className="space-y-4">
-          {comments.map(comment => (
-            <li key={comment.id} className="flex space-x-4">
-              <img src={comment.avatar} alt={comment.user} className="w-12 h-12 rounded-full" />
-              <div>
-                <p className="font-semibold">{comment.user} <span className="text-xs text-gray-500">{comment.likes} likes</span></p>
-                <p>{comment.text}</p>
-                <p className="text-xs text-gray-400">{new Date(comment.timestamp).toLocaleString()}</p>
-              </div>
-            </li>
+        
+        {/* Comments list */}
+        <div className="px-6 pb-6 space-y-4">
+          {comments.map(({ id, user, avatar, text, timestamp, likes }) => (
+            <CommentItem
+              key={id}
+              user={user}
+              avatar={avatar}
+              text={text}
+              timestamp={timestamp}
+              likes={likes}
+            />
           ))}
-        </ul>
+        </div>
       </div>
     </div>,
     document.body

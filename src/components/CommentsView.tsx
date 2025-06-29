@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ReactDOM from 'react-dom';
-import { X } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { X, Send } from 'lucide-react';
 import CommentItem from './CommentItem';
 
 interface Clip {
@@ -32,12 +31,25 @@ interface CommentsViewProps {
 }
 
 const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, isVisible = false }) => {
-  const [isOpen, setIsOpen] = useState(isVisible);
   const modalRef = useRef<HTMLDivElement>(null);
+  const [newComment, setNewComment] = useState('');
+
+  const handleSubmitComment = () => {
+    if (newComment.trim()) {
+      // TODO: Add comment submission logic here
+      console.log('New comment:', newComment);
+      setNewComment('');
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmitComment();
+    }
+  };
 
   useEffect(() => {
-    setIsOpen(isVisible);
-
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
@@ -67,8 +79,6 @@ const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, is
     if (isVisible) {
       document.addEventListener('keydown', handleKeyDown);
       modalRef.current?.focus();
-    } else {
-      document.removeEventListener('keydown', handleKeyDown);
     }
 
     return () => {
@@ -76,32 +86,28 @@ const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, is
     };
   }, [isVisible, onClose]);
 
-  return ReactDOM.createPortal(
-    <div
-      className={`fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-end transition-transform duration-300 ${isOpen ? 'translate-y-0' : 'translate-y-full'}`} 
-      onClick={onClose}
-      ref={modalRef}
-      tabIndex={-1}
-    >
-      <div className="w-full max-h-[70vh] md:max-h-[80vh] bg-gray-900 rounded-t-2xl shadow-xl overflow-y-auto relative" onClick={e => e.stopPropagation()}>
-        {/* Drag indicator */}
-        <div className="h-1.5 w-12 bg-gray-500 rounded-full mx-auto mt-3 mb-4" />
-        
-        {/* Sticky header */}
-        <div className="sticky top-0 bg-gray-900 px-6 py-4 border-b border-gray-700 z-10">
+  if (!isVisible) return null;
+
+  return (
+    <>
+      <div 
+        className="fixed inset-0 z-40" 
+        onClick={onClose}
+      />
+      <div 
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[80vh] bg-black/40 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl animate-fadeIn z-50 overflow-hidden"
+        ref={modalRef}
+        tabIndex={-1}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="p-6 border-b border-white/10">
           <div className="flex items-center justify-between">
-            <div className="flex-1 pr-4">
+            <div className="flex-1">
               <h2 className="text-xl font-bold text-white truncate">{clip.title}</h2>
-              <div className="flex items-center space-x-4 text-sm text-gray-400 mt-1">
-                <span>{clip.views} views</span>
-                <span>•</span>
-                <span>{clip.likes} likes</span>
-                <span>•</span>
-                <span>{clip.comments} comments</span>
-              </div>
             </div>
             <button
-              className="text-white hover:text-gray-400 transition-colors p-2 -mr-2"
+              className="text-white hover:text-gray-400 transition-colors p-2 ml-4 flex-shrink-0"
               onClick={onClose}
             >
               <X size={24} />
@@ -110,21 +116,58 @@ const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, is
         </div>
         
         {/* Comments list */}
-        <div className="px-6 pb-6 space-y-4">
-          {comments.map(({ id, user, avatar, text, timestamp, likes }) => (
-            <CommentItem
-              key={id}
-              user={user}
-              avatar={avatar}
-              text={text}
-              timestamp={timestamp}
-              likes={likes}
-            />
-          ))}
+        <div className="max-h-96 overflow-y-auto scrollbar-hide">
+          {comments && comments.length > 0 ? (
+            comments.map(({ id, user, avatar, text, timestamp, likes }) => (
+              <CommentItem
+                key={id}
+                user={user}
+                avatar={avatar}
+                text={text}
+                timestamp={timestamp}
+                likes={likes}
+              />
+            ))
+          ) : (
+            <div className="text-center text-gray-400 py-8 px-6">
+              <p>No comments yet. Be the first to comment!</p>
+            </div>
+          )}
+        </div>
+        
+        {/* Footer - Add Comment */}
+        <div className="p-4 border-t border-white/10 bg-black/20 backdrop-blur-sm">
+          <div className="flex items-center gap-3">
+            <div className="flex-1 relative">
+              <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Add a comment..."
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 resize-none min-h-[44px] max-h-[120px] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
+                rows={1}
+              />
+            </div>
+            <button
+              onClick={handleSubmitComment}
+              disabled={!newComment.trim()}
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white p-3 rounded-xl transition-colors flex items-center justify-center min-w-[44px]"
+            >
+              <Send size={18} />
+            </button>
+          </div>
+          <div className="flex justify-between items-center mt-2 text-xs text-gray-400">
+            <span>Press Enter to send, Shift+Enter for new line</span>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-white transition-colors px-2 py-1 rounded"
+            >
+              Dismiss
+            </button>
+          </div>
         </div>
       </div>
-    </div>,
-    document.body
+    </>
   );
 };
 

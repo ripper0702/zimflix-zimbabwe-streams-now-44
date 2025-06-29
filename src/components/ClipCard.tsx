@@ -16,6 +16,15 @@ interface Clip {
   category: string;
 }
 
+interface Comment {
+  id: string;
+  user: string;
+  avatar: string;
+  text: string;
+  timestamp: Date;
+  likes: number;
+}
+
 interface ClipCardProps {
   clip: Clip;
   comments: Comment[];
@@ -133,16 +142,16 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, comments, onPlay }) => {
           </div>
         </div>
       </div>
-      
-      {/* Comments View */}
-      {showComments && (
-        <CommentsView 
-          clip={clip} 
-          comments={comments} 
-          onClose={() => setShowComments(false)} 
-        />
-      )}
     </Link>
+
+    {/* Comments View */}
+    {showComments && (
+      <CommentsView 
+        clip={clip} 
+        comments={comments} 
+        onClose={() => setShowComments(false)} 
+      />
+    )}
   );
 };
 

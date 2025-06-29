@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import TopBar from '../components/TopBar';
 import FeaturedClip from '../components/FeaturedClip';
@@ -27,6 +26,7 @@ const Home = () => {
     likes: 15420,
     comments: 892,
     views: '125K',
+    duration: '8:45',
     category: 'Comedy'
   });
 

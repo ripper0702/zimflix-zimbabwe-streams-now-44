@@ -1,6 +1,6 @@
 
 import React, { useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'phosphor-react';
+import { CaretLeft, CaretRight } from 'phosphor-react';
 import ClipCard from './ClipCard';
 
 interface Clip {
@@ -47,7 +47,7 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
           onClick={() => scroll('left')}
           className="ml-2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-xl border border-white/20 text-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
         >
-          <ChevronLeft size={24} />
+          <CaretLeft size={24} />
         </button>
       </div>
 
@@ -56,7 +56,7 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
           onClick={() => scroll('right')}
           className="mr-2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-xl border border-white/20 text-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
         >
-          <ChevronRight size={24} />
+          <CaretRight size={24} />
         </button>
       </div>
 

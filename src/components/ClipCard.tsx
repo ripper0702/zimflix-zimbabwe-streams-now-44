@@ -27,20 +27,45 @@ interface Comment {
 
 interface ClipCardProps {
   clip: Clip;
-  comments: Comment[];
   onPlay: () => void;
 }
 
-const ClipCard: React.FC<ClipCardProps> = ({ clip, comments, onPlay }) => {
+const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
 
+  // Mock comments data - in a real app, this would come from props or API
+  const mockComments: Comment[] = [
+    {
+      id: '1',
+      user: 'john_doe',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face',
+      text: 'This is hilarious! 😂',
+      timestamp: new Date(Date.now() - 2 * 60 * 1000),
+      likes: 12
+    },
+    {
+      id: '2',
+      user: 'sarah_comedy',
+      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b8c8e04e?w=40&h=40&fit=crop&crop=face',
+      text: 'Amazing content as always! Keep it up 👏',
+      timestamp: new Date(Date.now() - 5 * 60 * 1000),
+      likes: 8
+    }
+  ];
+
   const handleInteraction = () => {
     if ('ontouchstart' in window) {
       setIsExpanded(!isExpanded);
     }
+  };
+
+  const handleCommentClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowComments(true);
   };
 
   return (
@@ -131,11 +156,7 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, comments, onPlay }) => {
               </button>
               
               <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setShowComments(true);
-                }}
+                onClick={handleCommentClick}
                 className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition-colors"
               >
                 <ChatCircle size={16} />
@@ -145,15 +166,13 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, comments, onPlay }) => {
         </div>
       </Link>
 
-      {/* Comments View */}
-      {showComments && (
-        <CommentsView 
-          clip={clip} 
-          comments={comments} 
-          onClose={() => setShowComments(false)} 
-          isVisible={showComments} 
-        />
-      )}
+      {/* Comments Modal */}
+      <CommentsView 
+        clip={clip} 
+        comments={mockComments} 
+        onClose={() => setShowComments(false)} 
+        isVisible={showComments}
+      />
     </>
   );
 };

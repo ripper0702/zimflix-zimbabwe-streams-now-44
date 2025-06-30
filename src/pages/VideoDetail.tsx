@@ -49,7 +49,6 @@ const VideoDetail = () => {
   const [mockComments, setMockComments] = useState<Comment[]>([]);
 
   useEffect(() => {
-    // Simulate fetching video data - in real app, this would be an API call
     const fetchVideoData = () => {
       // Video data with actual local file
       const mockVideo: VideoData = {
@@ -72,7 +71,6 @@ const VideoDetail = () => {
 
       setVideo(mockVideo);
 
-      // Mock related videos
       const mockRelated: VideoData[] = [
         {
           id: '2',
@@ -113,10 +111,10 @@ const VideoDetail = () => {
 
     fetchVideoData();
 
-    // Simulate fetching comments
     const fetchComments = async () => {
-      const { mockComments } = await import('@/data/mockComments');
-      setMockComments(mockComments);
+      const mockCommentsData = await import('@/data/mockComments');
+      const commentsForClip = mockCommentsData.default[id || 'clip1'] || [];
+      setMockComments(commentsForClip);
     };
 
     fetchComments();

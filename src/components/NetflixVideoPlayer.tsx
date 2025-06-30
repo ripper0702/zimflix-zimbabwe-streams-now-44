@@ -161,7 +161,7 @@ const NetflixVideoPlayer: React.FC<VideoPlayerProps> = ({
     }
   };
 
-  const handleKeydown = (event: KeyboardEvent) => {
+  const handleKeydown = (event: React.KeyboardEvent<HTMLVideoElement>) => {
     const video = videoRef.current;
     if (!video) return;
 
@@ -282,6 +282,26 @@ const NetflixVideoPlayer: React.FC<VideoPlayerProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+      <style>{`
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: #ef4444;
+          cursor: pointer;
+        }
+        
+        .slider::-moz-range-thumb {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: #ef4444;
+          cursor: pointer;
+          border: none;
+        }
+      `}</style>
+      
       {/* Video Container */}
       <div 
         className="relative w-full h-full flex items-center justify-center"
@@ -511,27 +531,6 @@ const NetflixVideoPlayer: React.FC<VideoPlayerProps> = ({
           </div>
         )}
       </div>
-
-      {/* Custom CSS for sliders */}
-      <style jsx>{`
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background: #ef4444;
-          cursor: pointer;
-        }
-        
-        .slider::-moz-range-thumb {
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background: #ef4444;
-          cursor: pointer;
-          border: none;
-        }
-      `}</style>
     </div>
   );
 };

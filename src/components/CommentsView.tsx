@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { X, Send } from 'lucide-react';
 import CommentItem from './CommentItem';
@@ -25,18 +26,22 @@ interface Comment {
 
 interface CommentsViewProps {
   clip: Clip;
-  comments: Comment[];
+  comments?: Comment[];
   onClose: () => void;
   isVisible?: boolean;
 }
 
-const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, isVisible = false }) => {
+const CommentsView: React.FC<CommentsViewProps> = ({ 
+  clip, 
+  comments = [], 
+  onClose, 
+  isVisible = false 
+}) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [newComment, setNewComment] = useState('');
 
   const handleSubmitComment = () => {
     if (newComment.trim()) {
-      // TODO: Add comment submission logic here
       console.log('New comment:', newComment);
       setNewComment('');
     }
@@ -54,35 +59,17 @@ const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, is
       if (event.key === 'Escape') {
         onClose();
       }
-
-      if (event.key === 'Tab' && modalRef.current) {
-        const focusableElements = modalRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-        );
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-
-        if (event.shiftKey) {
-          if (document.activeElement === firstElement) {
-            lastElement.focus();
-            event.preventDefault();
-          }
-        } else {
-          if (document.activeElement === lastElement) {
-            firstElement.focus();
-            event.preventDefault();
-          }
-        }
-      }
     };
 
     if (isVisible) {
       document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
       modalRef.current?.focus();
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'auto';
     };
   }, [isVisible, onClose]);
 
@@ -90,24 +77,28 @@ const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, is
 
   return (
     <>
+      {/* Backdrop */}
       <div 
-        className="fixed inset-0 z-40" 
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" 
         onClick={onClose}
       />
+      
+      {/* Modal */}
       <div 
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[80vh] bg-black/40 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl animate-fadeIn z-50 overflow-hidden"
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg max-h-[85vh] bg-black/40 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl animate-fadeIn z-50 overflow-hidden"
         ref={modalRef}
         tabIndex={-1}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-white/10">
+        <div className="p-6 border-b border-white/10 bg-black/20">
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <h2 className="text-xl font-bold text-white truncate">{clip.title}</h2>
+              <p className="text-gray-400 text-sm mt-1">{clip.comments} comments</p>
             </div>
             <button
-              className="text-white hover:text-gray-400 transition-colors p-2 ml-4 flex-shrink-0"
+              className="text-white hover:text-gray-400 transition-colors p-2 ml-4 flex-shrink-0 hover:bg-white/10 rounded-full"
               onClick={onClose}
             >
               <X size={24} />
@@ -116,21 +107,25 @@ const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, is
         </div>
         
         {/* Comments list */}
-        <div className="max-h-96 overflow-y-auto scrollbar-hide">
+        <div className="flex-1 max-h-96 overflow-y-auto scrollbar-hide">
           {comments && comments.length > 0 ? (
-            comments.map(({ id, user, avatar, text, timestamp, likes }) => (
+            comments.map((comment) => (
               <CommentItem
-                key={id}
-                user={user}
-                avatar={avatar}
-                text={text}
-                timestamp={timestamp}
-                likes={likes}
+                key={comment.id}
+                user={comment.user}
+                avatar={comment.avatar}
+                text={comment.text}
+                timestamp={comment.timestamp}
+                likes={comment.likes}
               />
             ))
           ) : (
-            <div className="text-center text-gray-400 py-8 px-6">
-              <p>No comments yet. Be the first to comment!</p>
+            <div className="text-center text-gray-400 py-12 px-6">
+              <div className="w-16 h-16 mx-auto mb-4 bg-white/5 rounded-full flex items-center justify-center">
+                <Send size={24} className="text-gray-500" />
+              </div>
+              <p className="text-lg font-medium mb-2">No comments yet</p>
+              <p className="text-sm text-gray-500">Be the first to share your thoughts!</p>
             </div>
           )}
         </div>
@@ -158,12 +153,6 @@ const CommentsView: React.FC<CommentsViewProps> = ({ clip, comments, onClose, is
           </div>
           <div className="flex justify-between items-center mt-2 text-xs text-gray-400">
             <span>Press Enter to send, Shift+Enter for new line</span>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-white transition-colors px-2 py-1 rounded"
-            >
-              Dismiss
-            </button>
           </div>
         </div>
       </div>

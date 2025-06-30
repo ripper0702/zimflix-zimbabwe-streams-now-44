@@ -24,6 +24,29 @@
 
   <body>
     <div id="root"></div>
+    <script>
+      // Defensive code for browser extension compatibility
+      window.addEventListener('error', function(e) {
+        // Suppress errors from browser extensions
+        if (e.filename && e.filename.includes('chrome-extension://')) {
+          e.preventDefault();
+          return true;
+        }
+      });
+      
+      // Add empty objects that some extensions might expect
+      if (typeof window.chrome === 'undefined') {
+        window.chrome = {};
+      }
+      
+      // Prevent extension injection errors by providing fallback objects
+      window.addEventListener('DOMContentLoaded', function() {
+        // Create any missing global objects that extensions might expect
+        if (!window.extensionConfig) {
+          window.extensionConfig = { enable: false, id: null };
+        }
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

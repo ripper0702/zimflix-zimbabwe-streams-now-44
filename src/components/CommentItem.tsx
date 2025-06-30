@@ -13,20 +13,21 @@ interface CommentItemProps {
 
 const CommentItem: React.FC<CommentItemProps> = ({ user, avatar, text, timestamp, likes }) => {
   return (
-    <div className="flex space-x-4 bg-gray-800 p-4 rounded-lg">
-      <Avatar>
-        <AvatarImage src={avatar} alt={user} />
-        <AvatarFallback>{user.slice(0, 2)}</AvatarFallback>
-      </Avatar>
-      <div className="text-gray-200">
-        <div className="flex justify-between items-center">
-          <p className="font-semibold">{user}</p>
-          <button className="flex items-center text-gray-400 hover:text-red-500 transition-colors">
-            <Heart className="mr-1" size={16} /> {likes}
-          </button>
+    <div className="p-4 border-b border-white/5 hover:bg-white/5 transition-all duration-300">
+      <div className="flex items-center space-x-4">
+        <div className="relative">
+          <Avatar>
+            <AvatarImage src={avatar} alt={user} />
+            <AvatarFallback>{user.slice(0, 2)}</AvatarFallback>
+          </Avatar>
         </div>
-        <p className="text-sm mt-1">{text}</p>
-        <p className="text-xs text-gray-500 mt-1">{formatRelativeTime(timestamp)}</p>
+        <div className="flex-1">
+          <p className="text-white text-sm">
+            <span className="font-semibold">{user}</span>
+            <span className="ml-1">{text}</span>
+          </p>
+          <p className="text-gray-400 text-xs mt-1">{formatRelativeTime(timestamp)}</p>
+        </div>
       </div>
     </div>
   );

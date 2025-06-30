@@ -51,73 +51,23 @@ const VideoDetail = () => {
   useEffect(() => {
     // Simulate fetching video data - in real app, this would be an API call
     const fetchVideoData = () => {
-      // Mock video data with adaptive streaming URLs
+      // Video data with actual local file
       const mockVideo: VideoData = {
         id: id || '1',
-        title: 'Zimbabwe Comedy Gold: The Ultimate Collection',
-        description: 'Experience the best of Zimbabwean comedy with this exclusive collection featuring top comedians from Harare, Bulawayo, and beyond. This premium series showcases the unique humor and cultural richness of Zimbabwe through carefully curated comedy sketches, stand-up performances, and improvised comedy gold. From street comedy to sophisticated humor, this collection represents the diverse comedy landscape of Zimbabwe.',
-        thumbnail: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1200&h=800&fit=crop',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        author: 'ZimComedy Studios',
-        likes: 15420,
-        comments: 892,
-        views: '125K',
-        duration: '45:30',
+        title: 'PAKUDA MARI - Comic Elder',
+        description: 'Zimbabwe Comedy Gold featuring Comic Elder. Pure entertainment that will keep you laughing! A hilarious comedy performance showcasing the unique humor and cultural richness of Zimbabwe.',
+        thumbnail: './thumbnail.jpg',
+        videoUrl: './stream vid/PAKUDA MARI - Comic Elder (360p, h264).mp4',
+        author: 'Comic Elder',
+        likes: 1540,
+        comments: 89,
+        views: '12.5K',
+        duration: '8:45',
         category: 'Comedy',
         releaseDate: '2024',
-        tags: ['Comedy', 'Zimbabwe', 'Entertainment', 'Culture', 'Exclusive'],
-        quality: ['4K', 'HD', 'SD'],
-        isExclusive: true,
-        episodes: [
-          {
-            id: 'ep1',
-            title: 'Street Comedy Chronicles',
-            description: 'The funniest street comedy from Harare and Bulawayo',
-            thumbnail: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400&h=300&fit=crop',
-            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-            author: 'ZimComedy Studios',
-            likes: 5420,
-            comments: 312,
-            views: '45K',
-            duration: '15:20',
-            category: 'Comedy',
-            releaseDate: '2024',
-            tags: ['Street Comedy'],
-            quality: ['HD']
-          },
-          {
-            id: 'ep2',
-            title: 'Stand-Up Spectacular',
-            description: 'The best stand-up comedians showcase their talent',
-            thumbnail: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
-            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-            author: 'ZimComedy Studios',
-            likes: 6200,
-            comments: 445,
-            views: '52K',
-            duration: '18:45',
-            category: 'Comedy',
-            releaseDate: '2024',
-            tags: ['Stand-up'],
-            quality: ['4K', 'HD']
-          },
-          {
-            id: 'ep3',
-            title: 'Family Comedy Hour',
-            description: 'Clean, family-friendly comedy for all ages',
-            thumbnail: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&h=300&fit=crop',
-            videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-            author: 'ZimComedy Studios',
-            likes: 3800,
-            comments: 135,
-            views: '28K',
-            duration: '12:25',
-            category: 'Comedy',
-            releaseDate: '2024',
-            tags: ['Family Friendly'],
-            quality: ['HD', 'SD']
-          }
-        ]
+        tags: ['Comedy', 'Zimbabwe', 'Entertainment', 'Culture'],
+        quality: ['HD', 'SD'],
+        isExclusive: false
       };
 
       setVideo(mockVideo);
@@ -204,7 +154,7 @@ const VideoDetail = () => {
     setIsInList(!isInList);
   };
 
-  const openComments = () => {
+const openComments = () => {\n    console.log('Opening comments');
     setIsCommentsOpen(true);
   };
 

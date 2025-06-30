@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import ClipCard from './ClipCard';
+import mockComments from '../data/mockComments';
 
 interface Clip {
   id: string;
@@ -55,6 +56,7 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
             <ClipCard
               key={clip.id}
               clip={clip}
+              comments={mockComments[clip.id] || []}
               onPlay={() => onPlayClip(clip)}
             />
           ))}

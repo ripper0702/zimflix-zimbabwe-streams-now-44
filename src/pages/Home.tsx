@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import FeaturedClip from '../components/FeaturedClip';
 import ClipRow from '../components/ClipRow';
+import VideoPlayer from '../components/VideoPlayer';
 import { zimComedyVideos, getVideosByCategory } from '../data/zimComedyVideos';
 
 interface Clip {
@@ -32,7 +33,9 @@ const Home = () => {
     comments: 89,
     views: '12.5K',
     duration: '8:45',
-    category: 'Comedy'
+    category: 'Comedy',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    youtubeId: 'dQw4w9WgXcQ'
   });
 
   const categoryVideos = getVideosByCategory();
@@ -52,16 +55,28 @@ const Home = () => {
     }
   ]);
 
+  const [currentVideo, setCurrentVideo] = useState<{
+    videoUrl?: string;
+    youtubeId?: string;
+    title: string;
+  } | null>(null);
+
   const navigate = useNavigate();
 
   const handlePlayClip = (clip: Clip) => {
     console.log('Playing clip:', clip.title);
-    if (clip.youtubeUrl) {
-      // Open YouTube video in new tab
-      window.open(clip.youtubeUrl, '_blank');
+    if (clip.youtubeId) {
+      // Play YouTube video in-app
+      setCurrentVideo({
+        youtubeId: clip.youtubeId,
+        title: clip.title
+      });
     } else {
-      // Fallback to internal video page
-      navigate(`/video/${clip.id}`);
+      // Fallback to local video
+      setCurrentVideo({
+        videoUrl: `./stream vid/${clip.title}.mp4`,
+        title: clip.title
+      });
     }
   };
 
@@ -89,6 +104,16 @@ const Home = () => {
           ))}
         </div>
       </div>
+
+      {/* Video Player Modal */}
+      {currentVideo && (
+        <VideoPlayer
+          videoUrl={currentVideo.videoUrl}
+          youtubeId={currentVideo.youtubeId}
+          title={currentVideo.title}
+          onClose={() => setCurrentVideo(null)}
+        />
+      )}
     </div>
   );
 };

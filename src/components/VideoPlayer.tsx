@@ -4,12 +4,13 @@ import { Play, Pause, Volume2, VolumeX, Maximize, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface VideoPlayerProps {
-  videoUrl: string;
+  videoUrl?: string;
+  youtubeId?: string;
   title: string;
   onClose: () => void;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, youtubeId, title, onClose }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -91,120 +92,135 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, title, onClose }) =
 
   return (
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-      <style>
-        {`
-          .video-slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #ef4444;
-            cursor: pointer;
-          }
-          
-          .video-slider::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #ef4444;
-            cursor: pointer;
-            border: none;
-          }
-        `}
-      </style>
-      <div 
-        className="relative w-full h-full flex items-center justify-center"
-        onMouseMove={() => setShowControls(true)}
-        onMouseLeave={() => setShowControls(false)}
-      >
-        <video
-          ref={videoRef}
-          src={videoUrl}
-          className="max-w-full max-h-full"
-          onClick={togglePlay}
-        />
+      <div className="relative w-full h-full flex items-center justify-center">
+        {youtubeId ? (
+          // YouTube embed
+          <iframe
+            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
+            className="w-full h-full max-w-6xl max-h-[90vh] aspect-video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          // Local video player
+          <>
+            <style>
+              {`
+                .video-slider::-webkit-slider-thumb {
+                  appearance: none;
+                  width: 16px;
+                  height: 16px;
+                  border-radius: 50%;
+                  background: #ef4444;
+                  cursor: pointer;
+                }
+                
+                .video-slider::-moz-range-thumb {
+                  width: 16px;
+                  height: 16px;
+                  border-radius: 50%;
+                  background: #ef4444;
+                  cursor: pointer;
+                  border: none;
+                }
+              `}
+            </style>
+            <div 
+              className="relative w-full h-full flex items-center justify-center"
+              onMouseMove={() => setShowControls(true)}
+              onMouseLeave={() => setShowControls(false)}
+            >
+              <video
+                ref={videoRef}
+                src={videoUrl}
+                className="max-w-full max-h-full"
+                onClick={togglePlay}
+              />
+              
+              {/* Controls overlay */}
+              {showControls && (
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  {/* Progress bar */}
+                  <div className="mb-4">
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={progressPercentage}
+                      onChange={handleSeek}
+                      className="video-slider w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <div className="flex justify-between text-xs text-gray-300 mt-1">
+                      <span>{formatTime(currentTime)}</span>
+                      <span>{formatTime(duration)}</span>
+                    </div>
+                  </div>
+
+                  {/* Control buttons */}
+                  <div className="flex items-center gap-4">
+                    <Button
+                      onClick={togglePlay}
+                      className="bg-white/20 hover:bg-white/30 text-white p-3 rounded-full"
+                      size="sm"
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-6 h-6" />
+                      ) : (
+                        <Play className="w-6 h-6 fill-current" />
+                      )}
+                    </Button>
+
+                    <Button
+                      onClick={toggleMute}
+                      className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full"
+                      size="sm"
+                    >
+                      {isMuted ? (
+                        <VolumeX className="w-4 h-4" />
+                      ) : (
+                        <Volume2 className="w-4 h-4" />
+                      )}
+                    </Button>
+
+                    <div className="flex-1" />
+
+                    <Button
+                      onClick={toggleFullscreen}
+                      className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full"
+                      size="sm"
+                    >
+                      <Maximize className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Play/Pause center button */}
+              {!isPlaying && showControls && (
+                <Button
+                  onClick={togglePlay}
+                  className="absolute inset-0 bg-black/30 hover:bg-black/50 text-white rounded-full w-20 h-20 m-auto"
+                >
+                  <Play className="w-8 h-8 fill-current" />
+                </Button>
+              )}
+            </div>
+          </>
+        )}
         
         {/* Close button */}
         <Button
           onClick={onClose}
-          className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2"
+          className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 z-10"
           size="sm"
         >
           <X className="w-4 h-4" />
         </Button>
 
         {/* Video title */}
-        <div className="absolute top-4 left-4 bg-black/50 text-white px-4 py-2 rounded">
+        <div className="absolute top-4 left-4 bg-black/50 text-white px-4 py-2 rounded z-10">
           <h2 className="text-lg font-semibold">{title}</h2>
         </div>
-
-        {/* Controls overlay */}
-        {showControls && (
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-            {/* Progress bar */}
-            <div className="mb-4">
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={progressPercentage}
-                onChange={handleSeek}
-                className="video-slider w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer"
-              />
-              <div className="flex justify-between text-xs text-gray-300 mt-1">
-                <span>{formatTime(currentTime)}</span>
-                <span>{formatTime(duration)}</span>
-              </div>
-            </div>
-
-            {/* Control buttons */}
-            <div className="flex items-center gap-4">
-              <Button
-                onClick={togglePlay}
-                className="bg-white/20 hover:bg-white/30 text-white p-3 rounded-full"
-                size="sm"
-              >
-                {isPlaying ? (
-                  <Pause className="w-6 h-6" />
-                ) : (
-                  <Play className="w-6 h-6 fill-current" />
-                )}
-              </Button>
-
-              <Button
-                onClick={toggleMute}
-                className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full"
-                size="sm"
-              >
-                {isMuted ? (
-                  <VolumeX className="w-4 h-4" />
-                ) : (
-                  <Volume2 className="w-4 h-4" />
-                )}
-              </Button>
-
-              <div className="flex-1" />
-
-              <Button
-                onClick={toggleFullscreen}
-                className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full"
-                size="sm"
-              >
-                <Maximize className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Play/Pause center button */}
-        {!isPlaying && showControls && (
-          <Button
-            onClick={togglePlay}
-            className="absolute inset-0 bg-black/30 hover:bg-black/50 text-white rounded-full w-20 h-20 m-auto"
-          >
-            <Play className="w-8 h-8 fill-current" />
-          </Button>
-        )}
       </div>
     </div>
   );

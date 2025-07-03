@@ -21,11 +21,7 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const handleWatchNow = () => {
-    if (clip.youtubeUrl) {
-      window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
-    } else {
-      onPlay();
-    }
+    onPlay();
   };
 
   return (
@@ -85,7 +81,7 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
               className="flex items-center space-x-3 bg-white text-black px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-md sm:text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
             >
               <Play size={24} weight="fill" />
-              <span>{clip.youtubeUrl ? 'Watch on YouTube' : 'Watch Now'}</span>
+              <span>Watch Now</span>
             </button>
 
             <div className="flex items-center space-x-2">

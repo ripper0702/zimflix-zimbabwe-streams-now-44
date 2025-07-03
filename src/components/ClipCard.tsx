@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Heart, Share, Play, Eye, ChatCircle } from '@phosphor-icons/react';
+import { Heart, Share, Play, Eye, ChatCircle, ExternalLink } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
 import CommentsView from './CommentsView';
 
@@ -14,6 +14,8 @@ interface Clip {
   views: string;
   duration: string;
   category: string;
+  youtubeUrl?: string;
+  youtubeId?: string;
 }
 
 interface Comment {
@@ -36,21 +38,21 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
 
-  // Mock comments data - in a real app, this would come from props or API
+  // Mock comments data
   const mockComments: Comment[] = [
     {
       id: '1',
-      user: 'john_doe',
+      user: 'zimcomedyfan',
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face',
-      text: 'This is hilarious! 😂',
+      text: 'This is pure Zimbabwe comedy gold! 😂🇿🇼',
       timestamp: new Date(Date.now() - 2 * 60 * 1000),
       likes: 12
     },
     {
       id: '2',
-      user: 'sarah_comedy',
+      user: 'harare_laughs',
       avatar: 'https://images.unsplash.com/photo-1494790108755-2616b8c8e04e?w=40&h=40&fit=crop&crop=face',
-      text: 'Amazing content as always! Keep it up 👏',
+      text: 'Kapfupi never disappoints! Keep the Zim content coming 👏',
       timestamp: new Date(Date.now() - 5 * 60 * 1000),
       likes: 8
     }
@@ -68,10 +70,14 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
     setShowComments(true);
   };
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onPlay();
+  };
+
   return (
     <>
-      <Link 
-        to={`/clip/${clip.id}`}
+      <div 
         className="relative flex-shrink-0 w-64 sm:w-72 md:w-80 cursor-pointer group block transition-transform duration-300 hover:scale-105 hover:z-10"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
@@ -97,9 +103,20 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
               {clip.duration}
             </div>
 
+            {/* YouTube Badge */}
+            {clip.youtubeUrl && (
+              <div className="absolute top-2 left-2 bg-red-600/90 backdrop-blur-sm text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+                <ExternalLink size={12} />
+                <span>YouTube</span>
+              </div>
+            )}
+
             {/* Play Button Overlay */}
             <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-              <div className="bg-white/20 hover:bg-white/30 backdrop-blur-xl border border-white/30 text-white p-4 rounded-full transition-all duration-300 hover:scale-110">
+              <div 
+                onClick={handleCardClick}
+                className="bg-white/20 hover:bg-white/30 backdrop-blur-xl border border-white/30 text-white p-4 rounded-full transition-all duration-300 hover:scale-110"
+              >
                 <Play size={32} weight="fill" />
               </div>
             </div>
@@ -135,10 +152,13 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
 
             {/* Action Buttons */}
             <div className="flex items-center space-x-2">
-              <div className="flex-1 bg-white text-black py-2 px-3 rounded-md font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2 text-sm pointer-events-none">
+              <button
+                onClick={handleCardClick}
+                className="flex-1 bg-white text-black py-2 px-3 rounded-md font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2 text-sm"
+              >
                 <Play size={16} weight="fill" />
                 <span>Watch</span>
-              </div>
+              </button>
               
               <button 
                 onClick={(e) => {
@@ -164,7 +184,7 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
             </div>
           </div>
         </div>
-      </Link>
+      </div>
 
       {/* Comments Modal */}
       <CommentsView 

@@ -9,16 +9,173 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      export_history: {
+        Row: {
+          created_at: string
+          created_by: string
+          date_from: string
+          date_to: string
+          digital_signature: string | null
+          export_type: string
+          file_hash: string
+          file_url: string | null
+          id: string
+          record_count: number
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          date_from: string
+          date_to: string
+          digital_signature?: string | null
+          export_type: string
+          file_hash: string
+          file_url?: string | null
+          id?: string
+          record_count: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          date_from?: string
+          date_to?: string
+          digital_signature?: string | null
+          export_type?: string
+          file_hash?: string
+          file_url?: string | null
+          id?: string
+          record_count?: number
+        }
+        Relationships: []
+      }
+      ledger_audit_log: {
+        Row: {
+          action: string
+          changed_at: string
+          changed_by: string
+          client_ip: unknown | null
+          id: string
+          ledger_id: string
+          new_values: Json
+          old_values: Json | null
+          user_agent: string | null
+        }
+        Insert: {
+          action: string
+          changed_at?: string
+          changed_by: string
+          client_ip?: unknown | null
+          id?: string
+          ledger_id: string
+          new_values: Json
+          old_values?: Json | null
+          user_agent?: string | null
+        }
+        Update: {
+          action?: string
+          changed_at?: string
+          changed_by?: string
+          client_ip?: unknown | null
+          id?: string
+          ledger_id?: string
+          new_values?: Json
+          old_values?: Json | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ledger_audit_log_ledger_id_fkey"
+            columns: ["ledger_id"]
+            isOneToOne: false
+            referencedRelation: "petty_cash_ledger"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      petty_cash_ledger: {
+        Row: {
+          amount: number
+          category: Database["public"]["Enums"]["expense_category"] | null
+          created_at: string
+          current_hash: string
+          description: string
+          id: string
+          is_deleted: boolean
+          previous_hash: string | null
+          receipt_url: string | null
+          running_balance: number
+          type: Database["public"]["Enums"]["transaction_type"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          category?: Database["public"]["Enums"]["expense_category"] | null
+          created_at?: string
+          current_hash: string
+          description: string
+          id?: string
+          is_deleted?: boolean
+          previous_hash?: string | null
+          receipt_url?: string | null
+          running_balance: number
+          type: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          category?: Database["public"]["Enums"]["expense_category"] | null
+          created_at?: string
+          current_hash?: string
+          description?: string
+          id?: string
+          is_deleted?: boolean
+          previous_hash?: string | null
+          receipt_url?: string | null
+          running_balance?: number
+          type?: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      calculate_ledger_hash: {
+        Args: {
+          p_id: string
+          p_type: Database["public"]["Enums"]["transaction_type"]
+          p_amount: number
+          p_category: Database["public"]["Enums"]["expense_category"]
+          p_description: string
+          p_user_id: string
+          p_created_at: string
+          p_previous_hash: string
+        }
+        Returns: string
+      }
+      calculate_running_balance: {
+        Args: { p_user_id: string }
+        Returns: number
+      }
+      get_latest_hash: {
+        Args: { p_user_id: string }
+        Returns: string
+      }
     }
     Enums: {
-      [_ in never]: never
+      expense_category:
+        | "office_supplies"
+        | "meals"
+        | "transportation"
+        | "utilities"
+        | "maintenance"
+        | "miscellaneous"
+      transaction_type: "expense" | "topup"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +290,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      expense_category: [
+        "office_supplies",
+        "meals",
+        "transportation",
+        "utilities",
+        "maintenance",
+        "miscellaneous",
+      ],
+      transaction_type: ["expense", "topup"],
+    },
   },
 } as const

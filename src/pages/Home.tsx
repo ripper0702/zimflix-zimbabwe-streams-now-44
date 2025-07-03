@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import FeaturedClip from '../components/FeaturedClip';
 import ClipRow from '../components/ClipRow';
+import { zimComedyVideos, getVideosByCategory } from '../data/zimComedyVideos';
 
 interface Clip {
   id: string;
@@ -15,6 +17,8 @@ interface Clip {
   duration: string;
   category: string;
   description?: string;
+  youtubeUrl?: string;
+  youtubeId?: string;
 }
 
 const Home = () => {
@@ -31,18 +35,20 @@ const Home = () => {
     category: 'Comedy'
   });
 
+  const categoryVideos = getVideosByCategory();
+
   const [clipCategories] = useState([
     {
-      title: 'Trending Now',
-      clips: []
+      title: 'Trending Zim Comedy',
+      clips: categoryVideos.trending
     },
     {
-      title: 'Comedy Hits',
-      clips: []
+      title: 'Classic Zim Laughs',
+      clips: categoryVideos.classic
     },
     {
-      title: 'Lifestyle & Culture',
-      clips: []
+      title: 'Latest Comedy Hits',
+      clips: categoryVideos.latest
     }
   ]);
 
@@ -50,7 +56,13 @@ const Home = () => {
 
   const handlePlayClip = (clip: Clip) => {
     console.log('Playing clip:', clip.title);
-    navigate(`/video/${clip.id}`);
+    if (clip.youtubeUrl) {
+      // Open YouTube video in new tab
+      window.open(clip.youtubeUrl, '_blank');
+    } else {
+      // Fallback to internal video page
+      navigate(`/video/${clip.id}`);
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Play, Heart, Share, Info, Plus, ChatCircle } from '@phosphor-icons/react';
+import { Play, Heart, Share, Info, Plus, ChatCircle, ExternalLink } from '@phosphor-icons/react';
 
 interface FeaturedClipProps {
   clip: {
@@ -13,12 +13,21 @@ interface FeaturedClipProps {
     comments: number;
     views: string;
     category: string;
+    youtubeUrl?: string;
   };
   onPlay: () => void;
 }
 
 const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
   const [isLiked, setIsLiked] = useState(false);
+
+  const handleWatchNow = () => {
+    if (clip.youtubeUrl) {
+      window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+    } else {
+      onPlay();
+    }
+  };
 
   return (
     <div className="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh] w-full overflow-hidden md:rounded-2xl md:mx-6 mb-12">
@@ -36,8 +45,16 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
       <div className="relative h-full flex flex-col justify-end p-6 sm:p-10 md:p-16">
         <div className="max-w-3xl">
           {/* Category Badge */}
-          <div className="inline-block bg-gradient-to-r from-green-400/20 to-yellow-400/20 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm px-3 py-1 rounded-full mb-4">
-            {clip.category}
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="inline-block bg-gradient-to-r from-green-400/20 to-yellow-400/20 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm px-3 py-1 rounded-full">
+              🇿🇼 {clip.category}
+            </div>
+            {clip.youtubeUrl && (
+              <div className="inline-block bg-red-600/20 backdrop-blur-sm border border-red-500/30 text-red-400 text-xs sm:text-sm px-3 py-1 rounded-full flex items-center gap-2">
+                <ExternalLink size={14} />
+                <span>Watch on YouTube</span>
+              </div>
+            )}
           </div>
 
           {/* Title */}
@@ -65,11 +82,11 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <button 
-              onClick={onPlay}
+              onClick={handleWatchNow}
               className="flex items-center space-x-3 bg-white text-black px-6 py-3 sm:px-8 sm:py-4 rounded-lg font-bold text-md sm:text-lg hover:bg-gray-200 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
             >
               <Play size={24} weight="fill" />
-              <span>Watch Now</span>
+              <span>{clip.youtubeUrl ? 'Watch on YouTube' : 'Watch Now'}</span>
             </button>
 
             <div className="flex items-center space-x-2">

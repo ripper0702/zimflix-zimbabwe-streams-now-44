@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Heart, Share, Play, Eye, ChatCircle, ExternalLink } from '@phosphor-icons/react';
+import { Heart, Share, Play, Eye, ChatCircle, ArrowSquareOut } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
 import CommentsView from './CommentsView';
 
@@ -106,7 +106,7 @@ const ClipCard: React.FC<ClipCardProps> = ({ clip, onPlay }) => {
             {/* YouTube Badge */}
             {clip.youtubeUrl && (
               <div className="absolute top-2 left-2 bg-red-600/90 backdrop-blur-sm text-white text-xs px-2 py-1 rounded flex items-center gap-1">
-                <ExternalLink size={12} />
+                <ArrowSquareOut size={12} />
                 <span>YouTube</span>
               </div>
             )}

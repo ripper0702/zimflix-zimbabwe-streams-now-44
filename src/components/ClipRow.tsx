@@ -1,8 +1,6 @@
-
 import React, { useRef } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import ClipCard from './ClipCard';
-import mockComments from '../data/mockComments';
 
 interface Clip {
   id: string;
@@ -56,7 +54,6 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
             <ClipCard
               key={clip.id}
               clip={clip}
-              comments={mockComments[clip.id] || []}
               onPlay={() => onPlayClip(clip)}
             />
           ))}
@@ -66,14 +63,12 @@ const ClipRow: React.FC<ClipRowProps> = ({ title, clips, onPlayClip }) => {
         <button
           onClick={() => scroll('left')}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-20 ml-2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-xl border border-white/20 text-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
-          // disabled={!canScrollLeft}
         >
           <CaretLeft size={24} />
         </button>
         <button
           onClick={() => scroll('right')}
           className="absolute right-0 top-1/2 -translate-y-1/2 z-20 mr-2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-xl border border-white/20 text-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 disabled:opacity-0 disabled:cursor-not-allowed"
-          // disabled={!canScrollRight}
         >
           <CaretRight size={24} />
         </button>

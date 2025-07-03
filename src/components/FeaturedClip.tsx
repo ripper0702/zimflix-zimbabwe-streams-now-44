@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Play, Heart, Share, Info, Plus, ChatCircle, ExternalLink } from '@phosphor-icons/react';
+import { Play, Heart, Share, Info, Plus, ChatCircle, ArrowSquareOut } from '@phosphor-icons/react';
 
 interface FeaturedClipProps {
   clip: {
@@ -51,7 +50,7 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
             </div>
             {clip.youtubeUrl && (
               <div className="inline-block bg-red-600/20 backdrop-blur-sm border border-red-500/30 text-red-400 text-xs sm:text-sm px-3 py-1 rounded-full flex items-center gap-2">
-                <ExternalLink size={14} />
+                <ArrowSquareOut size={14} />
                 <span>Watch on YouTube</span>
               </div>
             )}

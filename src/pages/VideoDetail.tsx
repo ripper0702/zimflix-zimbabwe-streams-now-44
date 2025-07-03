@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Play, Plus, ThumbsUp, ThumbsDown, Share, Download, ArrowLeft, MessageCircle } from 'lucide-react';
@@ -152,7 +153,8 @@ const VideoDetail = () => {
     setIsInList(!isInList);
   };
 
-const openComments = () => {\n    console.log('Opening comments');
+  const openComments = () => {
+    console.log('Opening comments');
     setIsCommentsOpen(true);
   };
 

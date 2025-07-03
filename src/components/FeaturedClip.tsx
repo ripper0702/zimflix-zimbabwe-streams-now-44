@@ -44,12 +44,6 @@ const FeaturedClip: React.FC<FeaturedClipProps> = ({ clip, onPlay }) => {
             <div className="inline-block bg-gradient-to-r from-green-400/20 to-yellow-400/20 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm px-3 py-1 rounded-full">
               🇿🇼 {clip.category}
             </div>
-            {clip.youtubeUrl && (
-              <div className="inline-block bg-red-600/20 backdrop-blur-sm border border-red-500/30 text-red-400 text-xs sm:text-sm px-3 py-1 rounded-full flex items-center gap-2">
-                <ArrowSquareOut size={14} />
-                <span>Watch on YouTube</span>
-              </div>
-            )}
           </div>
 
           {/* Title */}

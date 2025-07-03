@@ -57,7 +57,6 @@ const Home = () => {
 
   const [currentVideo, setCurrentVideo] = useState<{
     videoUrl?: string;
-    youtubeId?: string;
     title: string;
   } | null>(null);
 
@@ -65,19 +64,11 @@ const Home = () => {
 
   const handlePlayClip = (clip: Clip) => {
     console.log('Playing clip:', clip.title);
-    if (clip.youtubeId) {
-      // Play YouTube video in-app
-      setCurrentVideo({
-        youtubeId: clip.youtubeId,
-        title: clip.title
-      });
-    } else {
-      // Fallback to local video
-      setCurrentVideo({
-        videoUrl: `./stream vid/${clip.title}.mp4`,
-        title: clip.title
-      });
-    }
+    // Always use local video file
+    setCurrentVideo({
+      videoUrl: `./stream vid/${clip.title}.mp4`,
+      title: clip.title
+    });
   };
 
   return (
@@ -109,7 +100,6 @@ const Home = () => {
       {currentVideo && (
         <VideoPlayer
           videoUrl={currentVideo.videoUrl}
-          youtubeId={currentVideo.youtubeId}
           title={currentVideo.title}
           onClose={() => setCurrentVideo(null)}
         />

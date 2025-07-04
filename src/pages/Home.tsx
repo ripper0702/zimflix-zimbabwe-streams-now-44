@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import TopBar from '../components/TopBar';
 import FeaturedClip from '../components/FeaturedClip';
 import ClipRow from '../components/ClipRow';
-import VideoPlayer from '../components/VideoPlayer';
+import NetflixLikePlayer from '../components/NetflixLikePlayer';
 import { zimComedyVideos, getVideosByCategory } from '../data/zimComedyVideos';
 
 interface Clip {
@@ -18,8 +18,7 @@ interface Clip {
   duration: string;
   category: string;
   description?: string;
-  youtubeUrl?: string;
-  youtubeId?: string;
+  videoUrl?: string;
 }
 
 const Home = () => {
@@ -34,8 +33,7 @@ const Home = () => {
     views: '12.5K',
     duration: '8:45',
     category: 'Comedy',
-    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    youtubeId: 'dQw4w9WgXcQ'
+    videoUrl: './stream vid/PAKUDA MARI - Comic Elder (360p, h264).mp4'
   });
 
   const categoryVideos = getVideosByCategory();
@@ -64,9 +62,8 @@ const Home = () => {
 
   const handlePlayClip = (clip: Clip) => {
     console.log('Playing clip:', clip.title);
-    // Always use local video file
     setCurrentVideo({
-      videoUrl: `./stream vid/${clip.title}.mp4`,
+      videoUrl: clip.videoUrl || `./stream vid/${clip.title}.mp4`,
       title: clip.title
     });
   };
@@ -96,12 +93,13 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Video Player Modal */}
+      {/* Netflix-like Video Player Modal */}
       {currentVideo && (
-        <VideoPlayer
+        <NetflixLikePlayer
           videoUrl={currentVideo.videoUrl}
           title={currentVideo.title}
           onClose={() => setCurrentVideo(null)}
+          autoplay={true}
         />
       )}
     </div>
